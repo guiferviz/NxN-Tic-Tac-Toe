@@ -33,13 +33,15 @@ class Board():
     def get(self, row, col):
         return self.data[row * self.cols + col]
 
-    def save_range(self, player_id, cells):
+    def save_win_cells(self, player_id, cells):
         win_cells = []
         for row, col in cells:
             if self.get(row, col) == player_id:
                 win_cells += [(row, col)]
             elif len(win_cells) < self.n:
                 win_cells = []
+            else:
+                break
         self.win_cells = win_cells
 
     def get_win_cells(self):
@@ -51,7 +53,7 @@ class Board():
             if self.get(row, col) == player_id:
                 count += 1
                 if count == self.n:
-                    self.save_range(player_id, cells)
+                    self.save_win_cells(player_id, cells)
                     return True
             else:
                 count = 0
